@@ -12,8 +12,6 @@ def manhattan_distance(x1, x2):
 class KNN:
     def __init__(self, k, distance_metric='euclidean'):
         self.k = k
-        if distance_metric not in ['euclidean', 'manhattan']:
-            raise ValueError("distance_metric must be 'euclidean' or 'manhattan'")
         self.distance_metric = distance_metric
 
     def fit(self, X, y):
@@ -36,17 +34,17 @@ class KNN:
         return most_common[0][0]
 
 # Load dataset
-df = pd.read_csv(r"C:\Users\Akash\Downloads\glass.csv")
-y = df['Type'].values
-X = df.drop('Type', axis=1).values
+data = pd.read_csv(r"C:\Users\Akash\Downloads\glass.csv")
+y = data['Type'].values
+X = data.drop('Type', axis=1).values
 
 # Split dataset into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # Initialize KNN with k=3 and Euclidean distance
-clf_euclidean = KNN(k=3, distance_metric='euclidean')
-clf_euclidean.fit(X_train, y_train)
-predictions_euclidean = clf_euclidean.predict(X_test)
+euclidean = KNN(k=3, distance_metric='euclidean')
+euclidean.fit(X_train, y_train)
+predictions_euclidean = euclidean.predict(X_test)
 
 # Calculate accuracy for Euclidean distance
 accuracy_euclidean = np.sum(predictions_euclidean == y_test) / len(y_test)
@@ -54,9 +52,9 @@ print("Euclidean Distance - Predictions:", predictions_euclidean)
 print("Euclidean Distance - Accuracy:", accuracy_euclidean)
 
 # Initialize KNN with k=3 and Manhattan distance
-clf_manhattan = KNN(k=3, distance_metric='manhattan')
-clf_manhattan.fit(X_train, y_train)
-predictions_manhattan = clf_manhattan.predict(X_test)
+manhattan = KNN(k=3, distance_metric='manhattan')
+manhattan.fit(X_train, y_train)
+predictions_manhattan = manhattan.predict(X_test)
 
 # Calculate accuracy for Manhattan distance
 accuracy_manhattan = np.sum(predictions_manhattan == y_test) / len(y_test)
